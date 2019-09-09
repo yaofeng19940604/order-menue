@@ -7,21 +7,14 @@
 基于vant组件库开发
 ```
 ### 运行项目
-1. 进入apimdh文件夹，打开终端命令行工具，安装依赖并运行虚拟服务器
 
-```shell
-cnpm install
-
-node app.js
-```
-
-2. 在总文件夹内安装依赖：(当前文件夹名就是项目名)
+1. 安装依赖：
 
 ```shell
 cnpm install
 ```
 
-3. 启动服务
+2. 启动服务
 
 ```shell
 npm run serve
