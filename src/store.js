@@ -5,11 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    tableId:1,
+    user:{},
   },
   mutations: {
-    saveTableId(state,id){
-      state.tableId = id;
+    saveUser(state, user){
+      state.user = user;
     }
   },
   actions: {

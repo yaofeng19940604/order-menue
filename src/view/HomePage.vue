@@ -19,6 +19,7 @@ export default {
   data(){
     return {
       id: 1,
+      user:{},
     }
   },
   methods: {
@@ -27,6 +28,8 @@ export default {
           id: this.id
       }).then(res=>{
         this.user = res.data[0];
+        this.$store.commit('saveUser',this.user)
+        console.log(this.$store.state.user)
       })
     },
   },

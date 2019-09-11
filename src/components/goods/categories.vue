@@ -76,6 +76,7 @@ export default {
       vertical-align: middle;
       img{
         width: 95px;
+        height: 95px;
       }
       p{
         height: 40px;
