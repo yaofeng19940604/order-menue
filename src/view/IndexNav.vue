@@ -9,25 +9,25 @@
           class="item ac"
           icon="wap-home"
           text="首页"
-          to="/"
+          to="/home"
         />
         <van-grid-item
           class="item"
           icon="shop-o"
           text="分类"
-          to="/ClassifyPage"
+          to="/home/ClassifyPage"
         />
         <van-grid-item
           class="item"
           icon="shopping-cart-o"
           text="订单"
-          to="/CartPage"
+          to="/home/CartPage"
         />
         <van-grid-item
           class="item"
           icon="manager-o"
           text="我的"
-          to="/UserPage"
+          to="/home/UserPage"
         />
       </van-grid>
     </div>
@@ -69,8 +69,8 @@ export default {
     overflow:hidden;
   }
   .nav-bot{
-    border-top:1Px #e4e4e4 solid;
-    border-bottom:1Px #e4e4e4 solid;
+    border-top:1Px $main-bdcl solid;
+    border-bottom:1Px $main-bdcl solid;
     flex: 0;
     height: 114px;
     .van-grid-item__content{
@@ -87,10 +87,10 @@ export default {
     }
     .ac{
       .van-grid-item__icon{
-        color: #854b98;
+        color: $main-cl;
       }
       .van-grid-item__text{
-        color: #854b98;
+        color: $main-cl;
       }
     }
   }

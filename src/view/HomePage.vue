@@ -1,51 +1,63 @@
 <template>
   <div class="home-wrap">
-    home
-    <form>
-      <select name="table" v-model="id">
-        <option value="1">一号桌</option>
-        <option value="2">二号桌</option>
-        <option value="3">三号桌</option>
-        <option value="4">四号桌</option>
-        <option value="5">五号桌</option>
-      </select>
-      <button type="button" @click="onSubmit">提交</button>
-    </form>
+    <div class="banner-wrap">轮播图</div>
+    <div class="hot-wrap">热门菜品推荐</div>
+    <div class="des-wrap">
+      <h5 class="name"><van-icon name="send-gift-o"/>{{shop.name}}</h5>
+      <p><van-icon name="location-o"/>地址：{{shop.address}}</p>
+      <p><van-icon name="phone-o"/>电话：{{shop.phone}}</p>
+      <p><van-icon name="clock-o"/>营业时间：{{shop.openingtime}}</p>
+    </div>
   </div>
 </template>
 
 <script>
+import apiShop from "@/api/shop.js"
+import { Icon } from 'vant';
 export default {
   data(){
     return {
-      id: 1,
-      user:{},
+      shop:{},
     }
   },
   methods: {
-    onSubmit(){
-      this.$axios.post("api/user/matchingNum",{
-          id: this.id
-      }).then(res=>{
-        this.user = res.data[0];
-        this.$store.commit('saveUser',this.user)
-        console.log(this.$store.state.user)
-      })
-    },
+    
   },
   components: {
-    
-  }
+    "van-icon":Icon,
+  },
+  created(){
+    apiShop.getShopDetails(1).then(res=>{
+      this.shop = res;
+    })
+  },
 }
 </script>
 <style lang="scss">
-select{
-  width: 300px;
-  font-size: 30px;
-}
-button{
-  width: 100px;
-  font-size: 60px;
-  line-height: 100px;
+.home-wrap{
+  .des-wrap{
+    width: 357px;
+    padding: 15px 9px;
+    .name{
+      height: 60px;
+      line-height: 60px;
+      font-size: 20px;
+      font-weight: 800;
+      border-bottom: 1Px $main-bdcl solid;
+      margin-bottom: 25px;
+    }
+    p{
+      height: 50px;
+      line-height: 50px;
+      font-size: 16px;
+      border-bottom: 1Px $main-bdcl solid;
+    }
+    .van-icon{
+      vertical-align: middle;
+      font-size: 22px;
+      margin: 0 10px;
+      color: $main-cl;
+    }
+  }
 }
 </style>

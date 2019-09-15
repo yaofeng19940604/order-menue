@@ -1,5 +1,5 @@
 import axios from "axios"
-let ApiMenue = {
+let apiMenue = {
     getCategories(){
         return axios.get("api/category/getcategories").then(res => res.data)
     },
@@ -13,4 +13,4 @@ let ApiMenue = {
         return axios.get("api/menue/getMenueDetails/"+id).then(res => res.data[0])
     },
 }
-export default ApiMenue
+export default apiMenue

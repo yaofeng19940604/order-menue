@@ -6,37 +6,38 @@
       </van-sidebar>
     </div>
     <div class="right-category">
-      <a class="item" v-for="item in secondCategoryList" :key="item.id">
-        <img :src="`../images/${item.screen}`"/>
-        <p>{{item.name}}</p>
-      </a>
+      <div v-for="goods in goodsList" :key="goods.id">
+        <GoodsStyle1 :item="goods"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import ApiMenue from "../../api/menue.js"
+import apiMenue from "../../api/menue.js"
 import { Sidebar, SidebarItem } from 'vant';
+import GoodsStyle1 from "./GoodsStyle1.vue"
 export default {
     data:function(){
         return{
             activeKey: 0,
             categoryList:[],
-            secondCategoryList:[],
+            goodsList:[],
         }
     },
     components: {
       "van-sidebar":Sidebar,
       "van-sidebar-item":SidebarItem,
+      GoodsStyle1,
     },
     props: {
 
     },
     methods:{
-      onchang(index){
-        let id = this.categoryList[index].id;
-        ApiMenue.getMenues(id).then(res=>{
-          this.secondCategoryList = res
+      onchang(){
+        let id = this.activeKey+1;
+        apiMenue.getMenues(id).then(res=>{
+          this.goodsList = res
         });
       },
     },
@@ -44,14 +45,10 @@ export default {
 
     },
     created(){
-        ApiMenue.getCategories().then(res=>{
-          console.log(res)
+        apiMenue.getCategories().then(res=>{
           this.categoryList = res
         });
-        ApiMenue.getMenues(1).then(res=>{
-          console.log(res)
-          this.secondCategoryList = res
-        });
+        this.onchang();
     }
 }
 </script>
@@ -60,7 +57,7 @@ export default {
 .category-wrap{
   display: flex;
   height: 100%;
-  background-color:#fff;
+  background-color:$main-bc;
   .sidebar{
     width: 85px;
     overflow: auto;
@@ -69,21 +66,6 @@ export default {
   .right-category{
     flex-grow: 1;
     overflow: auto;
-    .item{
-      display: inline-block;
-      width: 95px;
-      text-align: center;
-      vertical-align: middle;
-      img{
-        width: 95px;
-        height: 95px;
-      }
-      p{
-        height: 40px;
-        font-size:14px;
-        line-height: 20px;
-      }
-    }
   }
 }
 </style>
