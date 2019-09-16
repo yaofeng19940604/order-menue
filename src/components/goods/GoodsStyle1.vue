@@ -2,12 +2,13 @@
     <a class="goods-wrap clearfix">
       <div class="pic fl">
         <img :src="`../images/${item.screen}`"/>
+        <!-- <img :src="`http://xwgkey.natappfree.cc/order_menue/public/upload/${item.screen}`"/> -->
       </div>
       <div class="content fl">
         <h6>{{item.name}}</h6>
         <p class="sales">{{item.sales}}</p>
         <p class="price">￥{{item.original_price}}</p>
-        <van-stepper min="0" v-model="value" @change="onChange(item.id)"/>
+        <van-stepper min="0" :value="item.num || 0" @change="onChange"/>
       </div>
     </a>
 </template>
@@ -17,7 +18,7 @@ import { Stepper } from 'vant';
 export default {
     data:function(){
         return{
-          value: 0,
+          
         }
     },
     props:["item"],
@@ -25,27 +26,33 @@ export default {
       "van-stepper":Stepper,
     },
     methods:{
-      onChange(id){
-        let menue = {}
-        menue.id = id;
-        menue.num = this.value;
-        let isOrder = this.isOrder(id)
-        console.log(isOrder)
-        menue.index = isOrder.index;
-        if(isOrder.res){
-          this.$store.commit('addNum',menue)
+      onChange(val){
+        this.item.num = val;
+        let id = this.item.id;
+        if(this.isOrder(id)){
+          this.item.num == 0 ? this.$store.commit('delMenue',this.item): this.$store.commit('changeNum',this.item);
         }else{
-          this.$store.commit('addMenue',menue)
+          this.$store.commit('addMenue',this.item)
         }
       },
       isOrder(id){
-        let menues = this.$store.state.menues;
-        for(let i = 0; i < menues.length; i++){
-          if(menues[i].id == menue.id){
-            return {res:true,index:i}
+        var menues = this.$store.state.menues;
+        for(var i = 0; i < menues.length; i++){
+          if(menues[i].id == id){
+            return true
           }
         }
-        return {res:false,index:menues.length}
+        return false
+      }
+    },
+    mounted(){
+      var menues = this.$store.state.menues;
+      for(var i = 0; i < menues.length; i++){
+        if(menues[i].id == this.item.id){
+          // 必须强制刷新数据
+          // this.item.num = menues[i].num   不管用
+          this.$set(this.item, 'num', menues[i].num)
+        }
       }
     }
 }

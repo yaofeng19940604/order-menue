@@ -9,8 +9,6 @@ axios.baseUrl = 'http://127.0.0.1:8000';
 
 Vue.prototype.$axios = axios;
 
-
-
 Vue.config.productionTip = false
 
 new Vue({
