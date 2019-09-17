@@ -7,22 +7,30 @@ export default new Vuex.Store({
   state: {
     user:{},
     menues:[],
+    tolPrice:0,
+    tolNum:0,
   },
   mutations: {
     saveUser(state, user){
       state.user = user;
     },
     changeNum(state, menue){
-      for(let item in state.menues){
-        if(item.id == menue.id){
-          item.num = menue.num
+      let menues = state.menues
+      for(var i = 0; i < menues.length; i++){
+        if(menues[i].id == menue.id){
+          if(menues[i].num > menue.num){
+            state.tolPrice += menue.num * menue.original_price
+            state.tolNum += menue.num
+          }else{
+            state.tolPrice -= menue.num * menue.original_price
+            state.tolNum -= menue.num
+          }
+          menues[i].num = menue.num;
         }
       }
-      // console.log(state.menues)
     },
     addMenue(state, menue){
       state.menues.push(menue)
-      // console.log(state.menues)
     },
     delMenue(state, menue){
       let menues = state.menues
@@ -31,7 +39,6 @@ export default new Vuex.Store({
           menues.splice(i,1)
         }
       }
-      // console.log(state.menues)
     }
   },
   actions: {

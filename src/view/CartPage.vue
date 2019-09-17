@@ -5,7 +5,7 @@
       <GoodsStyle v-show="menue.num" :item="menue"/>
     </div>
     <van-submit-bar
-      :price="3050"
+      :price="pricetol"
       button-text="提交订单"
       @submit="onSubmit"
     />
@@ -20,6 +20,7 @@ export default {
     return {
       orders:{},
       user:{},
+      pricetol:0,
     }
   },
   components: {
@@ -29,11 +30,12 @@ export default {
   methods:{
     onSubmit(){
 
-    }
+    },
   },
   mounted(){
     this.orders = this.$store.state.menues;
     this.user = this.$store.state.user;
+    // this.pricetol = this.$store.state.tolPrice*100
   }
 }
 </script>

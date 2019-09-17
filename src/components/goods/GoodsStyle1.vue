@@ -27,8 +27,8 @@ export default {
     },
     methods:{
       onChange(val){
-        this.item.num = val;
         let id = this.item.id;
+        this.$set(this.item, 'num', val)
         if(this.isOrder(id)){
           this.item.num == 0 ? this.$store.commit('delMenue',this.item): this.$store.commit('changeNum',this.item);
         }else{
