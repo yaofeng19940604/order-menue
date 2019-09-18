@@ -7,7 +7,7 @@
       <van-grid clickable :column-num="4">
         <van-grid-item
           class="item ac"
-          icon="wap-home"
+          icon="wap-home-o"
           text="首页"
           to="/home"
         />

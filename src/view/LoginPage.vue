@@ -25,10 +25,10 @@ export default {
   methods: {
     onConfirm(value, index) {
       Toast(`您选择的是：${value}`);
-      this.$axios.post("api/user/matchingNum",{
+      this.$axios.post("user/matchingNum",{
           id: index+1,
       }).then(res=>{
-        this.user = res.data[0];
+        this.user = res.data;
         this.$store.commit('saveUser',this.user)
       })
       this.$router.push("home");

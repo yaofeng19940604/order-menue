@@ -1,12 +1,11 @@
 <template>
-    <a class="goods-wrap clearfix">
-      <a class="pic fl"  :href="`#/MenueDetails/${item.id}`">
+    <a class="goods-wrap2">
+      <a class="pic" :href="`#/MenueDetails/${item.id}`">
         <img :src="`http://yzcf97.natappfree.cc/order_menue/public/upload/${item.screen}`"/>
       </a>
-      <div class="content fl">
+      <div class="content">
         <h6>{{item.name}}</h6>
-        <p class="sales">{{item.sales}}</p>
-        <p class="price">￥{{item.original_price}}</p>
+        <p class="price">价格：<span>￥{{item.original_price}}</span></p>
         <van-stepper min="0" :value="item.num || 0" @change="onChange"/>
       </div>
     </a>
@@ -26,7 +25,6 @@ export default {
     },
     methods:{
       onChange(val){
-        // console.log("onchange")
         let id = this.item.id;
         this.$set(this.item, 'num', val)
         if(this.isOrder(id)){
@@ -36,7 +34,6 @@ export default {
         }
         this.$store.commit("sumPrice")
         this.$store.commit("sumNum")
-        this.$emit("mychange")
       },
       isOrder(id){
         var menues = this.$store.state.menues;
@@ -62,35 +59,33 @@ export default {
 </script>
 
 <style lang="scss">
-.goods-wrap{
+.goods-wrap2{
   display: block;
-  width: 100%;
-  padding: 20px 0;
+  width: 177px;
   .pic{
     display: block;
     img{
-      width: 95px;
-      height: 95px;
-      margin: 0 9px;
+      width: 177px;
+      height: 177px;
+      margin-bottom: 9px;
     }
   }
-  h6{
-    height: 24px;
-    font-size:16px;
-    line-height: 24px;
-    font-weight: 500;
-  }
-  .sales{
-    font-size: 13PX;
-    line-height: 20px;
-    height: 20px;
-    margin-bottom: 5px;
-  }
-  .price{
-    font-size: 16px;
-    line-height: 20px;
-    height: 20px;
-    color: $main-cl;
+  .content{
+    padding-left: 11px;
+    h6{
+      height: 24px;
+      font-size:16px;
+      line-height: 24px;
+      font-weight: 500;
+    }
+    .price{
+      font-size: 13px;
+      line-height: 20px;
+      height: 20px;
+      span{
+        color: $main-cl;
+      }
+    }
   }
 }
 </style>

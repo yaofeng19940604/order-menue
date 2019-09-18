@@ -1,8 +1,10 @@
 <template>
   <div class="cart-wrap">
-    <h5 class="table">您当前所选的桌号是：{{user.name}}</h5>
+    <div class="cart-header">
+      <h5 class="table">您当前所选的桌号是：{{user.name}}</h5>
+    </div>
     <div v-for="menue in orders" :key="menue.id">
-      <GoodsStyle v-show="menue.num" :item="menue"/>
+      <GoodsStyle1 v-show="menue.num" :item="menue" @mychange="onChange"/>
     </div>
     <van-submit-bar
       :price="pricetol"
@@ -13,7 +15,7 @@
 </template>
 
 <script>
-import GoodsStyle from "../components/goods/GoodsStyle1.vue"
+import GoodsStyle1 from "../components/goods/GoodsStyle1.vue"
 import { SubmitBar } from 'vant';
 export default {
   data(){
@@ -21,26 +23,41 @@ export default {
       orders:{},
       user:{},
       pricetol:0,
+      tolNum:0,
     }
   },
   components: {
-    GoodsStyle,
+    GoodsStyle1,
     "van-submit-bar":SubmitBar,
   },
   methods:{
     onSubmit(){
 
     },
+    onChange(){
+      this.pricetol = this.$store.state.tolPrice*100
+      this.tolNum = this.$store.state.tolNum
+    }
   },
-  mounted(){
+  watch:{
+    
+  },
+  created(){
+    // console.log("created")
     this.orders = this.$store.state.menues;
     this.user = this.$store.state.user;
-    // this.pricetol = this.$store.state.tolPrice*100
+    this.pricetol = this.$store.state.tolPrice*100
+    this.tolNum = this.$store.state.tolNum
+  },
+  mounted(){
+    // console.log("mounted")
   }
 }
 </script>
 <style lang="scss">
 .cart-wrap{
+  height: 100%;
+  overflow: auto;
   .table{
     font-size: 20px;
     line-height: 50px;

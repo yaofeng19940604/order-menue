@@ -1,16 +1,19 @@
 import axios from "axios"
 let apiMenue = {
     getCategories(){
-        return axios.get("api/category/getcategories").then(res => res.data)
+        return axios.get("category/getcategories").then(res => res.data)
     },
     getMenues(id){
-        return axios.get("api/menue/getMenues/"+id).then(res => res.data)
+        return axios.get("menue/getMenues/"+id).then(res => res.data)
+    },
+    getHotMenues(){
+        return axios.get("menue/getHotMenues").then(res => res.data)
     },
     getAllMenues(){
-        return axios.get("api/menue/getAllMenues").then(res => res.data)
+        return axios.get("menue/getAllMenues").then(res => res.data)
     },
     getMenueDetails(id){
-        return axios.get("api/menue/getMenueDetails/"+id).then(res => res.data[0])
+        return axios.get("menue/getMenueDetails/"+id).then(res => res.data)
     },
 }
 export default apiMenue
