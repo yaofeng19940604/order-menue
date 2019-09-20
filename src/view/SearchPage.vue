@@ -6,7 +6,7 @@
         class="search"
         v-model="words"
         placeholder="请输入菜单名"
-        background="#fddf63"
+        background="#3298ed"
         show-action
         @search="onSearch"
         @cancel="onCancel"
@@ -71,11 +71,15 @@ export default {
     .search{
       padding-left: 50px;
     }
+    .van-search__action{
+      color: #fff;
+    }
     .icon{
       position: absolute;
       top:15px;
       left: 12px;
       font-size: 24px;
+      color: #fff;
     }
   }
   .search-menues-wrap{

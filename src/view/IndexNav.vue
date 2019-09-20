@@ -9,25 +9,25 @@
           class="item ac"
           icon="wap-home-o"
           text="首页"
-          to="/home"
+          to="/"
         />
         <van-grid-item
           class="item"
           icon="shop-o"
           text="分类"
-          to="/home/ClassifyPage"
+          to="/ClassifyPage"
         />
         <van-grid-item
           class="item"
           icon="shopping-cart-o"
-          text="订单"
-          to="/home/CartPage"
+          text="购物车"
+          to="/CartPage"
         />
         <van-grid-item
           class="item"
           icon="manager-o"
-          text="我的"
-          to="/home/UserPage"
+          text="订单"
+          to="/UserPage"
         />
       </van-grid>
     </div>

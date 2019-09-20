@@ -1,7 +1,7 @@
 const path = require('path')
 module.exports = {
   devServer: {
-    proxy: 'http://yzcf97.natappfree.cc/order_menue/public/api/'
+    proxy: 'http://vy2pn3.natappfree.cc/order_menue/public/api/'
   },
   pluginOptions: {
     'style-resources-loader': {

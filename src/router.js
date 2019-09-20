@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import LoginPage from "./view/LoginPage.vue"
+// import LoginPage from "./view/LoginPage.vue"
 import IndexNav from './view/IndexNav.vue'
 Vue.use(Router)
 export default new Router({
   routes: [
-    {path: "/", component: LoginPage},
-    {path: "/home", component: IndexNav,children:[
+    // {path: "/", component: LoginPage},
+    {path: "/", component: IndexNav,children:[
       {path: "", component: ()=>import("./view/HomePage.vue")},
       {path: "HomePage", component: ()=>import("./view/HomePage.vue")},
       {path: "ClassifyPage", component: ()=>import("./view/ClassifyPage.vue")},

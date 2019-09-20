@@ -1,7 +1,8 @@
 <template>
   <div class="cart-wrap">
     <div class="cart-header">
-      <h5 class="table">您当前所选的桌号是：{{user.name}}</h5>
+      <!-- <h5 class="table">您当前所选的桌号是：{{user.name}}</h5> -->
+      <van-cell title="桌号" is-link :value="table" @click="onClick"/>
     </div>
     <div v-for="menue in orders" :key="menue.id">
       <GoodsStyle1 v-show="menue.num" :item="menue" @mychange="onChange"/>
@@ -11,12 +12,17 @@
       button-text="提交订单"
       @submit="onSubmit"
     />
+    <van-action-sheet
+      v-model="show"
+      :actions="actions"
+      @select="onSelect"
+    />
   </div>
 </template>
 
 <script>
 import GoodsStyle1 from "../components/goods/GoodsStyle1.vue"
-import { SubmitBar } from 'vant';
+import { SubmitBar, Cell, CellGroup, ActionSheet, Toast  } from 'vant';
 export default {
   data(){
     return {
@@ -24,20 +30,85 @@ export default {
       user:{},
       pricetol:0,
       tolNum:0,
+      table:"",
+      show: false,
+      actions: [
+        { name: '一号桌' },
+        { name: '二号桌' },
+        { name: '三号桌' },
+        { name: '四号桌' },
+        { name: '五号桌' },
+        { name: '六号桌' },
+        { name: '七号桌' },
+        { name: '八号桌' },
+        { name: '九号桌' },
+      ],
     }
   },
   components: {
     GoodsStyle1,
     "van-submit-bar":SubmitBar,
+    "van-cell":Cell,
+    "van-action-sheet":ActionSheet,
   },
   methods:{
     onSubmit(){
-
+      let state = this.$store.state
+      if(!state.user.id){
+        this.show = true;
+        return
+      }
+      if(state.menues.length==0){
+        Toast("请选择菜品");
+        return
+      }
+      let params = {}
+      var outTradeNo="";  //订单号
+      for(var i=0;i<6;i++){
+          outTradeNo += Math.floor(Math.random()*10);
+      }
+      outTradeNo = new Date().getTime() + outTradeNo;  //时间戳，用来生成订单号。
+      params.order_id = outTradeNo;
+      params.user_id = state.user.id
+      params.menues = []
+      for(let menue of state.menues){
+        let item = {};
+        item.id = menue.id;
+        item.num = menue.num;
+        params.menues.push(item)
+      }
+      let time = new Date().getTime()
+      this.$axios.post("/order/saveOrder",params)
+      .then(res => {
+        if(res.data.code == 200){
+          this.$store.commit('saveOrders',outTradeNo)
+          this.orders={};
+          this.pricetol = 0;
+          this.tolNum = 0;
+          this.$router.push("UserPage")
+        }
+      })
     },
     onChange(){
       this.pricetol = this.$store.state.tolPrice*100
       this.tolNum = this.$store.state.tolNum
-    }
+    },
+    onClick(){
+      this.show = true;
+    },
+    onSelect(item,index) {
+      this.show = false;
+      this.table = item.name;
+      // console.log(item,index)
+      this.$axios.post("user/matchingNum",{
+          id: index+1,
+      }).then(res=>{
+        this.user = res.data;
+        this.$store.commit('saveUser',this.user)
+      })
+      Toast(item.name);
+      // console.log(this.$store.state.user)
+    },
   },
   watch:{
     
@@ -51,6 +122,7 @@ export default {
   },
   mounted(){
     // console.log("mounted")
+    this.table = this.$store.state.user.name||"请选择当前桌号"
   }
 }
 </script>

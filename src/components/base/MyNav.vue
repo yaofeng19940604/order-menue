@@ -48,13 +48,13 @@ export default {
   width: 100%;
   z-index: 100;
   .van-nav-bar .van-icon{
-    color: #000;
+    color: #fff;
   }
   .van-nav-bar{
     background-color: $main-cl;
   }
   .van-nav-bar__title{
-    color: #000;
+    color: #fff;
   }
 }
 </style>
