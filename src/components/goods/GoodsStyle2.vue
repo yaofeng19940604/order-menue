@@ -1,7 +1,7 @@
 <template>
     <a class="goods-wrap2">
       <a class="pic" :href="`#/MenueDetails/${item.id}`">
-        <img :src="`http://vy2pn3.natappfree.cc/order_menue/public/upload/${item.screen}`"/>
+        <img :src="`http://jddsfq.natappfree.cc/order_menue/public/upload/${item.screen}`"/>
       </a>
       <div class="content">
         <h6>{{item.name}}</h6>
@@ -26,6 +26,7 @@ export default {
     methods:{
       onChange(val){
         let id = this.item.id;
+        // 默认为0 当数据发生改变时给菜单强制添加  num键
         this.$set(this.item, 'num', val)
         if(this.isOrder(id)){
           this.item.num == 0 ? this.$store.commit('delMenue',this.item): this.$store.commit('changeNum',this.item);
@@ -45,7 +46,8 @@ export default {
         return false
       }
     },
-    mounted(){
+    created(){
+      // console.log('created')
       var menues = this.$store.state.menues;
       for(var i = 0; i < menues.length; i++){
         if(menues[i].id == this.item.id){
@@ -54,7 +56,10 @@ export default {
           this.$set(this.item, 'num', menues[i].num)
         }
       }
-    }
+    },
+    // mounted(){
+    //   console.log('mounted')
+    // }
 }
 </script>
 

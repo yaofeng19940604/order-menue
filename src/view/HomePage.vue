@@ -13,7 +13,7 @@
     </div>
     <div class="banner-wrap">
       <van-swipe :autoplay="3000" indicator-color="white">
-        <van-swipe-item v-for="(img,index) in shop.banner_list" :key="index"><img class="swipe-pic" :src="`http://vy2pn3.natappfree.cc/order_menue/public/upload/${img}`"></van-swipe-item>
+        <van-swipe-item v-for="(img,index) in shop.banner_list" :key="index"><img class="swipe-pic" :src="`http://jddsfq.natappfree.cc/order_menue/public/upload/${img}`"></van-swipe-item>
       </van-swipe>
     </div>
     <div class="hot-wrap">

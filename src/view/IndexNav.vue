@@ -6,25 +6,33 @@
     <div class="nav-bot">
       <van-grid clickable :column-num="4">
         <van-grid-item
-          class="item ac"
+          class="item"
+          :class="{ac:showIndex==0}"
+          @click="onClick(0)"
           icon="wap-home-o"
           text="首页"
           to="/"
         />
         <van-grid-item
           class="item"
+          :class="{ac:showIndex==1}"
+          @click="onClick(1)"
           icon="shop-o"
           text="分类"
           to="/ClassifyPage"
         />
         <van-grid-item
           class="item"
+          :class="{ac:showIndex==2}"
+          @click="onClick(2)"
           icon="shopping-cart-o"
           text="购物车"
           to="/CartPage"
         />
         <van-grid-item
           class="item"
+          :class="{ac:showIndex==3}"
+          @click="onClick(3)"
           icon="manager-o"
           text="订单"
           to="/UserPage"
@@ -36,7 +44,7 @@
 
 <script>
 import { Grid, GridItem } from 'vant';
-import $ from 'jquery'
+// import $ from 'jquery'
 export default {
   components: {
     "van-grid":Grid,
@@ -44,16 +52,32 @@ export default {
   },
   data:function(){
     return{
-
+      showIndex:0,
     }
   },
   methods:{
-
+    onClick(i){
+      this.showIndex = i;
+      this.$store.commit("changeIndex",i)
+    }
+  },
+  watch:{
+    getshowIndex:function(val){
+      // console.log(val)
+      this.showIndex = val;
+    }
+  },
+  computed:{
+    getshowIndex(){
+      return this.$store.state.showIndex;
+    }
   },
   mounted() {
-    $(".item").click(function(){
-        $(this).addClass("ac").siblings().removeClass("ac");
-    })
+    // $(".item").click(function(ev){
+    //     // $(this).addClass("ac").siblings().removeClass("ac");
+    // })
+    this.showIndex = this.$store.state.showIndex;
+    // console.log(this.$store.state.showIndex)
   },
 }
 </script>

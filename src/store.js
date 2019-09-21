@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    showIndex:0,
     user:{},
     menues:[],
     ordermenues:[],
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     orderCode:"",
   },
   mutations: {
+    changeIndex(state,index){
+      state.showIndex = index;
+    },
     saveUser(state, user){
       state.user = user;
     },

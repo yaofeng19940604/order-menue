@@ -47,7 +47,7 @@ export default {
       this.$router.go(-1)
     },
     onClick(){
-      this.$router.push("/home");
+      this.$router.push("/");
     }
   },
   created(){

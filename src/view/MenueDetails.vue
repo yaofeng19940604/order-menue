@@ -3,7 +3,7 @@
     <MyNav :title="menue.name"/>
     <div class="banner-wrap">
       <van-swipe :autoplay="3000" indicator-color="white">
-        <van-swipe-item v-for="(img,index) in menue.banner_arr" :key="index"><img class="swipe-pic" :src="`http://vy2pn3.natappfree.cc/order_menue/public/upload/${img}`"></van-swipe-item>
+        <van-swipe-item v-for="(img,index) in menue.banner_arr" :key="index"><img class="swipe-pic" :src="`http://jddsfq.natappfree.cc/order_menue/public/upload/${img}`"></van-swipe-item>
       </van-swipe>
     </div>
     <div class="text-wrap">
@@ -11,21 +11,13 @@
       <p class="price">￥{{menue.original_price}}</p>
       <van-stepper min="0" :value="menue.num || 0" @change="onChange"/>
       <h6>菜品介绍</h6>
-      <p>{{menue.des}}</p>
+      <p>{{menue.des||"暂无介绍，敬请更新"}}</p>
     </div>
-    <!-- <div class="cart-wrap">
-      <van-goods-action>
-        <van-goods-action-icon icon="chat-o" text="客服" />
-        <van-goods-action-icon icon="shop-o" text="店铺" />
-        <van-goods-action-button color="#fddf63" type="warning" text="加入购物车" />
-        <van-goods-action-button color="#fddf63" type="danger" text="立即购买" />
-      </van-goods-action>
-    </div> -->
   </div>
 </template>
 <script>
 import apiMenue from "../api/menue.js"
-import { Swipe, SwipeItem, GoodsAction, GoodsActionIcon, GoodsActionButton, Stepper } from 'vant';
+import { Swipe, SwipeItem, Stepper } from 'vant';
 import MyNav from "../components/base/MyNav.vue"
 export default {
   data: function() {
@@ -36,9 +28,6 @@ export default {
   components: {
     "van-swipe-item":SwipeItem,
     "van-swipe":Swipe,
-    "van-goods-action":GoodsAction,
-    "van-goods-action-icon":GoodsActionIcon,
-    "van-goods-action-button":GoodsActionButton,
     "van-stepper":Stepper,
     MyNav,
   },

@@ -1,11 +1,13 @@
 <template>
   <div class="cart-wrap">
     <div class="cart-header">
-      <!-- <h5 class="table">您当前所选的桌号是：{{user.name}}</h5> -->
       <van-cell title="桌号" is-link :value="table" @click="onClick"/>
+      <p v-show="isHas">您还未选择菜品</p>
     </div>
-    <div v-for="menue in orders" :key="menue.id">
-      <GoodsStyle1 v-show="menue.num" :item="menue" @mychange="onChange"/>
+    <div class="menues-wrap">
+      <div v-for="menue in orders" :key="menue.id">
+        <GoodsStyle1 v-show="menue.num" :item="menue" @mychange="onChange"/>
+      </div>
     </div>
     <van-submit-bar
       :price="pricetol"
@@ -22,10 +24,11 @@
 
 <script>
 import GoodsStyle1 from "../components/goods/GoodsStyle1.vue"
-import { SubmitBar, Cell, CellGroup, ActionSheet, Toast  } from 'vant';
+import { SubmitBar, Cell, ActionSheet, Toast  } from 'vant';
 export default {
   data(){
     return {
+      isHas:true,
       orders:{},
       user:{},
       pricetol:0,
@@ -59,7 +62,7 @@ export default {
         return
       }
       if(state.menues.length==0){
-        Toast("请选择菜品");
+        Toast("请选择菜品后再提交订单");
         return
       }
       let params = {}
@@ -77,7 +80,6 @@ export default {
         item.num = menue.num;
         params.menues.push(item)
       }
-      let time = new Date().getTime()
       this.$axios.post("/order/saveOrder",params)
       .then(res => {
         if(res.data.code == 200){
@@ -86,6 +88,7 @@ export default {
           this.pricetol = 0;
           this.tolNum = 0;
           this.$router.push("UserPage")
+          this.$store.commit('changeIndex',3)
         }
       })
     },
@@ -111,7 +114,13 @@ export default {
     },
   },
   watch:{
-    
+    orders:function(val){
+      if(val.length != 0){
+        this.isHas = false;
+      }else{
+        this.isHas = true;
+      }
+    }
   },
   created(){
     // console.log("created")
@@ -129,14 +138,35 @@ export default {
 <style lang="scss">
 .cart-wrap{
   height: 100%;
-  overflow: auto;
+  padding-top: 45px;
+  padding-bottom: 50px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  .cart-header{
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    p{
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 100px;
+    }
+  }
+  .menues-wrap{
+    flex-grow: 0;
+    overflow: auto;
+  }
   .table{
     font-size: 20px;
     line-height: 50px;
     height: 50px;
   }
   .van-submit-bar{
-    bottom: 58px;
+    bottom: 55px;
   }
 }
 </style>
