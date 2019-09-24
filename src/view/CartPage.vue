@@ -65,6 +65,12 @@ export default {
         Toast("请选择菜品后再提交订单");
         return
       }
+      if(JSON.parse(sessionStorage.getItem("orderMenues"))){
+        Toast("您已经提交过订单，请勿重复提交");
+        this.$router.push("UserPage")
+        this.$store.commit('changeIndex',3)
+        return
+      }
       let params = {}
       var outTradeNo="";  //订单号
       for(var i=0;i<6;i++){
@@ -110,7 +116,6 @@ export default {
         this.$store.commit('saveUser',this.user)
       })
       Toast(item.name);
-      // console.log(this.$store.state.user)
     },
   },
   watch:{
@@ -124,14 +129,15 @@ export default {
   },
   created(){
     // console.log("created")
+    // orders user  在app.vue 中created已经初始化过
     this.orders = this.$store.state.menues;
     this.user = this.$store.state.user;
-    this.pricetol = this.$store.state.tolPrice*100
-    this.tolNum = this.$store.state.tolNum
+    this.pricetol = sessionStorage.getItem("sumPrice")*100 || this.$store.state.tolPrice*100
+    this.tolNum = sessionStorage.getItem("sumNum") || this.$store.state.tolNum
+    this.table = JSON.parse(sessionStorage.getItem("user")) ? JSON.parse(sessionStorage.getItem("user")).name : "请选择当前桌号"
   },
   mounted(){
     // console.log("mounted")
-    this.table = this.$store.state.user.name||"请选择当前桌号"
   }
 }
 </script>

@@ -4,6 +4,9 @@
       <div class="oreder-menue-wrap">
         <GoodsOrder v-for="menue in orderMenue" :key="menue.id" :menue="menue"/>
       </div>
+      <div class="bottom">
+        <p>合计：<span>￥{{orderPrice}}</span></p>
+      </div>
     </van-panel>
   </div>
 </template>
@@ -18,7 +21,8 @@ export default {
       orderTime:"",
       status:"制作中",
       show:true,
-      orderMenue:[]
+      orderMenue:[],
+      orderPrice:0
     }
   },
   components: {
@@ -26,7 +30,7 @@ export default {
     GoodsOrder,
   },
   created(){
-    let orderCode = this.$store.state.orderCode;
+    let orderCode = sessionStorage.getItem("orderCode");
     if(!orderCode){
       this.show = false;
       Toast("您还未下单，请下单");
@@ -39,7 +43,8 @@ export default {
     .then(res => {
       this.orderTime = res.data.created_at;
     })
-    this.orderMenue = this.$store.state.ordermenues
+    this.orderMenue = JSON.parse(sessionStorage.getItem("orderMenues"))
+    this.orderPrice = sessionStorage.getItem("orderPrice");
   },
   mounted(){
 
@@ -48,8 +53,20 @@ export default {
 </script>
 <style lang="scss">
 .user-wrap{
+  height: 100%;
+  overflow: auto;
   .oreder-menue-wrap{
     padding:10px 16px;
+  }
+  .bottom{
+    padding-right: 20px;
+    text-align: right;
+    line-height: 40px;
+    font-size: 20px;
+    span{
+      font-size: 24px;
+      color: $main-cl;
+    }
   }
 }
 </style>

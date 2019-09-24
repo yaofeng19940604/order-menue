@@ -1,7 +1,7 @@
 <template>
     <div class="oreder-goods-wrap">
       <div class="pic-wrap">
-        <img :src="`http://jddsfq.natappfree.cc/order_menue/public/upload/${menue.screen}`"/>
+        <img :src="`http://hsjxww.natappfree.cc/order_menue/public/upload/${menue.screen}`"/>
       </div>
       <div class="text-wrap clearfix">
         <div class="text-fl fl">

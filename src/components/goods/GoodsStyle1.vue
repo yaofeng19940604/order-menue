@@ -1,7 +1,7 @@
 <template>
     <a class="goods-wrap clearfix">
       <a class="pic fl"  :href="`#/MenueDetails/${item.id}`">
-        <img :src="`http://jddsfq.natappfree.cc/order_menue/public/upload/${item.screen}`"/>
+        <img :src="`http://hsjxww.natappfree.cc/order_menue/public/upload/${item.screen}`"/>
       </a>
       <div class="content fl">
         <h6>{{item.name}}</h6>
@@ -26,11 +26,14 @@ export default {
     },
     methods:{
       onChange(val){
-        // console.log("onchange")
+        let menues = this.$store.state.menues;
         let id = this.item.id;
+        // 默认为0 当数据发生改变时给菜单强制添加  num键
         this.$set(this.item, 'num', val)
-        if(this.isOrder(id)){
-          this.item.num == 0 ? this.$store.commit('delMenue',this.item): this.$store.commit('changeNum',this.item);
+        // console.log(this.item)
+        let res = this.isOrder(id,menues)
+        if(res.isOrder){
+          val == 0 ? this.$store.commit('delMenue',res.index): this.$store.commit('changeNum',{"menue":this.item,"index":res.index});
         }else{
           this.$store.commit('addMenue',this.item)
         }
@@ -38,24 +41,26 @@ export default {
         this.$store.commit("sumNum")
         this.$emit("mychange")
       },
-      isOrder(id){
-        var menues = this.$store.state.menues;
+      isOrder(id,menues){
+        if(menues.length==0){
+            return {isOrder:false}
+        }
         for(var i = 0; i < menues.length; i++){
           if(menues[i].id == id){
-            return true
+            return {isOrder:true,index:i}
           }
         }
-        return false
+        return {isOrder:false}
       }
     },
     created(){
-      var menues = this.$store.state.menues;
-      for(var i = 0; i < menues.length; i++){
-        if(menues[i].id == this.item.id){
-          // 必须强制刷新数据
-          // this.item.num = menues[i].num   不管用
-          this.$set(this.item, 'num', menues[i].num)
-        }
+      let menues = this.$store.state.menues;
+      let id = this.item.id;
+      let res = this.isOrder(id,menues)
+      if(res.isOrder){
+        // 必须强制刷新数据
+        // this.item.num = menues[i].num   不管用
+        this.$set(this.item, 'num', menues[res.index].num)
       }
     }
 }

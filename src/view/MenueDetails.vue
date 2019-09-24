@@ -3,7 +3,7 @@
     <MyNav :title="menue.name"/>
     <div class="banner-wrap">
       <van-swipe :autoplay="3000" indicator-color="white">
-        <van-swipe-item v-for="(img,index) in menue.banner_arr" :key="index"><img class="swipe-pic" :src="`http://jddsfq.natappfree.cc/order_menue/public/upload/${img}`"></van-swipe-item>
+        <van-swipe-item v-for="(img,index) in menue.banner_arr" :key="index"><img class="swipe-pic" :src="`http://hsjxww.natappfree.cc/order_menue/public/upload/${img}`"></van-swipe-item>
       </van-swipe>
     </div>
     <div class="text-wrap">
@@ -34,39 +34,47 @@ export default {
   props: {},
   methods: {
     onChange(val){
+        let menues = this.$store.state.menues;
         let id = this.menue.id;
+        // 默认为0 当数据发生改变时给菜单强制添加  num键
         this.$set(this.menue, 'num', val)
-        if(this.isOrder(id)){
-          this.menue.num == 0 ? this.$store.commit('delMenue',this.menue): this.$store.commit('changeNum',this.menue);
+        // console.log(this.item)
+        let res = this.isOrder(id,menues)
+        if(res.isOrder){
+          val == 0 ? this.$store.commit('delMenue',res.index): this.$store.commit('changeNum',{"menue":this.menue,"index":res.index});
         }else{
           this.$store.commit('addMenue',this.menue)
         }
         this.$store.commit("sumPrice")
         this.$store.commit("sumNum")
       },
-      isOrder(id){
-        var menues = this.$store.state.menues;
+      isOrder(id,menues){
+        if(menues.length==0){
+            return {isOrder:false}
+        }
         for(var i = 0; i < menues.length; i++){
           if(menues[i].id == id){
-            return true
+            return {isOrder:true,index:i}
           }
         }
-        return false
+        return {isOrder:false}
       }
   },
   created(){
     let id = this.$route.params.id
-    var menues = this.$store.state.menues;
-    for(var i = 0; i < menues.length; i++){
-      if(menues[i].id == id){
-        this.menue = menues[i]
-        return
+    let menues = this.$store.state.menues;
+    let res = this.isOrder(id,menues)
+    apiMenue.getMenueDetails(id).then(menue=>{
+      this.menue = menue
+      // 异步请求问题，强制更新不能放在axios后面 ，必须放在代码里面
+      if(res.isOrder){
+        this.$set(this.menue, 'num', menues[res.index].num)
       }
-    }
-    apiMenue.getMenueDetails(id).then(res=>{
-      this.menue = res
     })
-  }
+  },
+  mounted() {
+    
+  },
 };
 </script>
 

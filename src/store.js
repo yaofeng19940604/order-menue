@@ -16,11 +16,20 @@ export default new Vuex.Store({
     orderCode:"",
   },
   mutations: {
+    // 初始化state.menues数据  如果JSON.parse(sessionStorage.getItem("menues")) 存在，则赋值给state
+    intMenues(state){
+      state.menues = JSON.parse(sessionStorage.getItem("menues"));
+    },
+    intUser(state){
+      state.user = JSON.parse(sessionStorage.getItem("user"));
+    },
     changeIndex(state,index){
       state.showIndex = index;
+      sessionStorage.setItem("showIndex",index)
     },
     saveUser(state, user){
       state.user = user;
+      sessionStorage.setItem("user",JSON.stringify(user));
     },
     saveOrders(state,orderCode){
       state.orderCode = orderCode;
@@ -30,24 +39,33 @@ export default new Vuex.Store({
       state.menues = [];
       state.tolPrice = 0;
       state.tolNum = 0;
+      sessionStorage.removeItem("menues")
+      sessionStorage.removeItem("sumPrice")
+      sessionStorage.removeItem("sumNum")
+      sessionStorage.setItem("orderCode",state.orderCode)
+      sessionStorage.setItem("orderMenues",JSON.stringify(state.ordermenues));
+      sessionStorage.setItem("orderPrice",state.orderPrice)
+      sessionStorage.setItem("orderNum",state.orderNum)
     },
-    changeNum(state, menue){
-      // console.log("changeNum")
+    changeNum(state, {menue,index}){
       let menues = state.menues
-      for(var i = 0; i < menues.length; i++){
-        if(menues[i].id == menue.id){
-          // console.log(menues[i].num , menue.num)
-          // 这两个数据已经同步了，所以下面逻辑不对   再说，当数量为0时，执行addMenue事件   也不可取
-          // if(menues[i].num > menue.num){
-          //   state.tolPrice += menue.num * menue.original_price
-          //   state.tolNum += menue.num
-          // }else{
-          //   state.tolPrice -= menue.num * menue.original_price
-          //   state.tolNum -= menue.num
-          // }
-          menues[i].num = menue.num;
-        }
-      }
+      // console.log(menues)
+      menues[index].num = menue.num;
+      sessionStorage.setItem("menues",JSON.stringify(menues));
+      // console.log(JSON.parse(sessionStorage.getItem("menues")))
+    },
+    delMenue(state, index){
+      let menues = state.menues
+      menues.splice(index,1)
+      sessionStorage.setItem("menues",JSON.stringify(menues));
+      // console.log(JSON.parse(sessionStorage.getItem("menues")))
+    },
+    addMenue(state, menue){
+      let menues = state.menues
+      // console.log(menues)
+      menues.push(menue)
+      sessionStorage.setItem("menues",JSON.stringify(menues));
+      // console.log(JSON.parse(sessionStorage.getItem("menues")))
     },
     sumPrice(state) {
       let sumPrice = 0;
@@ -55,6 +73,7 @@ export default new Vuex.Store({
         sumPrice += menue.num * menue.original_price;
       }
       state.tolPrice = sumPrice;
+      sessionStorage.setItem("sumPrice",sumPrice)
     },
     sumNum(state) {
       let sumNum = 0;
@@ -62,18 +81,8 @@ export default new Vuex.Store({
         sumNum += menue.num;
       }
       state.tolNum = sumNum;
+      sessionStorage.setItem("sumNum",sumNum)
     },
-    addMenue(state, menue){
-      state.menues.push(menue)
-    },
-    delMenue(state, menue){
-      let menues = state.menues
-      for(var i = 0; i < menues.length; i++){
-        if(menues[i].id == menue.id){
-          menues.splice(i,1)
-        }
-      }
-    }
   },
   actions: {
 

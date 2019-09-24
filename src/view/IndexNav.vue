@@ -63,7 +63,6 @@ export default {
   },
   watch:{
     getshowIndex:function(val){
-      // console.log(val)
       this.showIndex = val;
     }
   },
@@ -72,12 +71,13 @@ export default {
       return this.$store.state.showIndex;
     }
   },
+  created(){
+    this.showIndex = sessionStorage.getItem("showIndex") || this.$store.state.showIndex;
+  },
   mounted() {
     // $(".item").click(function(ev){
     //     // $(this).addClass("ac").siblings().removeClass("ac");
     // })
-    this.showIndex = this.$store.state.showIndex;
-    // console.log(this.$store.state.showIndex)
   },
 }
 </script>
