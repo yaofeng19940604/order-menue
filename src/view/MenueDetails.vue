@@ -3,7 +3,7 @@
     <MyNav :title="menue.name"/>
     <div class="banner-wrap">
       <van-swipe :autoplay="3000" indicator-color="white">
-        <van-swipe-item v-for="(img,index) in menue.banner_arr" :key="index"><img class="swipe-pic" :src="`http://hsjxww.natappfree.cc/order_menue/public/upload/${img}`"></van-swipe-item>
+        <van-swipe-item v-for="(img,index) in menue.banner_arr" :key="index"><img class="swipe-pic" :src="`http://k2stbb.natappfree.cc/order_menue/public/upload/${img}`"></van-swipe-item>
       </van-swipe>
     </div>
     <div class="text-wrap">
@@ -11,7 +11,7 @@
       <p class="price">￥{{menue.original_price}}</p>
       <van-stepper min="0" :value="menue.num || 0" @change="onChange"/>
       <h6>菜品介绍</h6>
-      <p>{{menue.des||"暂无介绍，敬请更新"}}</p>
+      <p class="des">{{menue.des||"暂无介绍，敬请更新"}}</p>
     </div>
   </div>
 </template>
@@ -102,7 +102,7 @@ export default {
       color: $main-cl;
       border-bottom: 1PX $main-bdcl solid;
     }
-    p{
+    .des{
       width: 351px;
       line-height: 24px;
       font-size: 13px;

@@ -35,7 +35,12 @@ export default {
     },
     methods:{
       onchang(){
-        let id = this.activeKey+1;
+        let activeKey = this.activeKey
+        // console.log(typeof(sessionStorage.getItem("activeKey")))
+        // sessionStorage存储的数据是字符串类型
+        let id = activeKey-0+1;
+        // console.log(id)
+        this.$store.commit("changeActiveKey",activeKey)
         apiMenue.getMenues(id).then(res=>{
           this.goodsList = res
         });
@@ -45,10 +50,15 @@ export default {
 
     },
     created(){
-        apiMenue.getCategories().then(res=>{
-          this.categoryList = res
-        });
-        this.onchang();
+      // console.log("created")
+      apiMenue.getCategories().then(res=>{
+        this.categoryList = res
+      });
+      this.activeKey = sessionStorage.getItem("activeKey") || this.$store.state.activeKey
+      this.onchang();
+    },
+    mounted(){
+      // console.log("mounted")
     }
 }
 </script>

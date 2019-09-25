@@ -1,7 +1,7 @@
 <template>
     <a class="goods-wrap clearfix">
       <a class="pic fl"  :href="`#/MenueDetails/${item.id}`">
-        <img :src="`http://hsjxww.natappfree.cc/order_menue/public/upload/${item.screen}`"/>
+        <img :src="`http://k2stbb.natappfree.cc/order_menue/public/upload/${item.screen}`"/>
       </a>
       <div class="content fl">
         <h6>{{item.name}}</h6>

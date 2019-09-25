@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     showIndex:0,
+    activeKey:0,
     user:{},
     menues:[],
     ordermenues:[],
@@ -26,6 +27,10 @@ export default new Vuex.Store({
     changeIndex(state,index){
       state.showIndex = index;
       sessionStorage.setItem("showIndex",index)
+    },
+    changeActiveKey(state,activeKey){
+      state.activeKey = activeKey;
+      sessionStorage.setItem("activeKey",activeKey)
     },
     saveUser(state, user){
       state.user = user;
